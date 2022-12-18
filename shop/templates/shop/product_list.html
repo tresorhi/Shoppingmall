@@ -28,11 +28,10 @@
     {% for p in product_list %}
     <div class="card mb-4" id="product-{{p.pk}}">
         {% if p.head_image %}
-        <img class="card-img-top" src="{{p.head_image.url}}" alt="{{p}}의 head_image" />
+            <img class="card-img-top" style="height:200px" src="{{p.head_image.url}}" alt="{{p}}의 head_image" />
         {% else %}
         <img class="card-img-top" src="https://picsum.photos/seed/{{p.pk}}/800/200" alt="random image" />
         {% endif %}
-
         <div class="card-body">
             {% if p.category %}
             <span class="badge badge-secondary float-right">

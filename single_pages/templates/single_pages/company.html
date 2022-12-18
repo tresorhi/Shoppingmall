@@ -13,14 +13,15 @@
 </head>
 <body>
   {% include 'shop/navbar.html' %}
+  <br>
   <section>
     <div class="container">
         <div class="row">
             <div class="col-lg-8" id="main-area">
                 <h1>About Company</h1>
                 <h2>어디서나 확인할 수 있는 메이플 스토리 옥션</h2>
-                <h5>그동안 인게임에 접속해야만 확인할 수 있던 메이플 스토리의 옥션 아이템들을 어느곳에서나 확인할 수 있습니다.</h5>
-                <h5>또한 서버별로 나뉘어 비교하기 어려웠던 아이템의 가격을 한번에 모아서 확인할 수 있습니다.</h5>
+                <h6>그동안 인게임에 접속해야만 확인할 수 있던 메이플 스토리의 옥션 아이템들을 어느곳에서나 확인할 수 있습니다.</h6>
+                <h6>또한 서버별로 나뉘어 비교하기 어려웠던 아이템의 가격을 한번에 모아서 확인할 수 있습니다.</h6>
             </div>
             <div class="col-lg-4">
                 <img src="{% static 'single_pages/images/maple.jpg' %}" class="img-fluid">
@@ -28,6 +29,8 @@
         </div>
     </div>
   </section>
+
+    <br><br>
 
   <section class="margin-for-footer">
       <div class="container">
@@ -39,29 +42,31 @@
           <div class="row">
               <div class="col-4">
                   <div class="card" data-toggle="modal" data-target="#info1">
-                      <img class="card-img-top" src="{%static 'single_pages/images/automation_python.png' %}">
+                      <img class="card-img-top" src="{%static 'single_pages/images/auction.png' %}">
                       <div class="card-body">
-                          <h5>첫번째 포트폴리오</h5>
-                          <p>첫번째 포트폴리오입니다.</p>
+                          <h5>게임 밖의 옥션</h5>
+                          <p>메이플 스토리는 게임에 접속해야만 옥션에 등록된 아이템을 조회할 수 있다.</p>
                       </div>
                   </div>
               </div>
+
               <div class="col-4">
                   <div class="card" data-toggle="modal" data-target="#info2">
-                      <img class="card-img-top" src="{%static 'single_pages/images/server.png' %}">
+                      <img class="card-img-top" src="{%static 'single_pages/images/scania.jpg' %}">
                       <div class="card-body">
                           <h5>다양한 서버</h5>
-                          <p>메이플 스토리에는 유저간 거래가 가능한 서버가 총 14개가 있다. 인게임 옥션은 각 서버별로 나뉘어 있기 때문에 서버별 가격 비교가 어렵다.</p>
+                          <p>메이플 스토리에는 유저간 거래가 가능한 서버가 총 12개가 있다.</p>
                       </div>
                   </div>
               </div>
+
               <div class="col-4">
                   <div class="card">
                       <div class="card" data-toggle="modal" data-target="#info3">
-                      <img class="card-img-top" src="{%static 'single_pages/images/meso.png' %}">
+                      <div class="card-img-top" id="mychart1"></div>
                       <div class="card-body">
-                          <h5>최대 제한 메소</h5>
-                          <p>인게임 옥션에서 사용할 수 있는 최대 메소는 1000억으로 제한되어 있기 때문에 그 이상의 값어치를 하는 아이템은 옥션에서 찾아볼 수 없다.</p>
+                          <h5>판매량</h5>
+                          <p>지난 4년 동안 이렇게나 많은 분들이 이용해주셨습니다.</p>
                       </div>
                   </div>
               </div>
@@ -69,14 +74,117 @@
       </div>
   </section>
 
+  <script>
+  google.charts.load('current', {'packages':['bar']});
+  google.charts.setOnLoadCallback(drawChart);
 
+  function drawChart(){
+    var data = google.visualization.arrayToDataTable([
+      ['Year', '무기', '방어구', '장신구'],
+      ['2019', 1000, 400, 200],
+      ['2020', 1170, 460, 250],
+      ['2021', 600, 1120, 300],
+      ['2022', 1030, 540, 350]
+    ]);
+    var options = {
+      chart: {
+        title : 'Company Performance',
+        subtitle : 'Sales, Expenses, Profit : 2014-2017',
+      }
+    };
+    var chart = new google.charts.Bar(document.getElementById('mychart1'));
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  };
+
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart2);
+
+  function drawChart2(){
+    var data = google.visualization.arrayToDataTable([
+    ['Server', 'user'],
+    ['루나', 16.7],
+    ['스카니아', 16],
+    ['엘리시움', 13.1],
+    ['크로아', 11.9],
+    ['오로라', 10.1],
+    ['베라', 9.9],
+    ['이노시스', 2],
+    ['유니온', 2],
+    ['레드', 1.7],
+    ['제니스', 1.7],
+    ['아케인', 0.7],
+    ['노바', 0.3]
+    ]);
+    var options = {
+      chart: {
+        title : 'Company Performance',
+        subtitle : 'Sales : 2014-2017'
+      }
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('mychart2'));
+    chart.draw(data, options);
+  };
+  </script>
+
+  <!--Modal-->
+  <div class="modal fade" id="info1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">게임 밖의 옥션</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-6">
+                  <img class="card-img-top" src="{%static 'single_pages/images/auction.png' %}">
+              </div>
+              <div class="col-6">
+                  <h5>게임 밖의 옥션</h5>
+                  <p>메이플 스토리는 게임에 접속해야만 옥션에 등록된 아이템을 조회할 수 있다.</p>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!--Modal-->
   <div class="modal fade" id="info2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel1">다양한 서버</h5>
+            <h5 class="modal-title" id="exampleModalLabel2">서버 분포도</h5>
+          <button typ="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-12">
+                  전체 유저 비율을 나타낸 그래프이다.
+                  <div class="card-img-top" id="mychart2"></div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal-->
+  <div class="modal fade" id="info3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel3">최대 제한 메소</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -84,9 +192,24 @@
         <div class="modal-body">
           <div class="row">
               <div class="col-12">
-                  <h5>14개의 서버로 나뉜</h5>
-                  <p>서버 접속 인구에 따라 생산, 소비되는 아이템의 총량에 큰 차이가 있기 때문에 같은 아이템이더라도 서버별로 가격이 상이하다.</p>
-                  <p>하지만 인게임에서는 옥션이 통합되어 있지 않기 때문에 한 눈에 파악하기 어려운데, 쇼핑몰을 통해 한눈에 파악할 수 있다.</p>
+                  <h5></h5>
+                  <table class="table-boundary table-striped">
+                      <tr>
+                          <th>Year</th><th>무기</th><th>방어구</th><th>장신구</th>
+                      </tr>
+                      <tr>
+                          <th>2019</th><th>1000</th><th>400</th><th>200</th>
+                      </tr>
+                      <tr>
+                          <th>2020</th><th>1170</th><th>460</th><th>250</th>
+                      </tr>
+                      <tr>
+                          <th>2021</th><th>600</th><th>1120</th><th>300</th>
+                      </tr>
+                      <tr>
+                          <th>2022</th><th>1030</th><th>540</th><th>350</th>
+                      </tr>
+                  </table>
               </div>
           </div>
         </div>
@@ -98,7 +221,7 @@
   </div>
 
   <div class="fixed-bottom">
-      {% include 'blog/footer.html' %}
+      {% include 'shop/footer.html' %}
   </div>
 
 

@@ -52,6 +52,8 @@ class Product(models.Model):
     head_image = models.ImageField(upload_to='shop/images/%Y/%m/%d/', blank=True)
     # %Y 2022, %y 22
 
+    content = models.TextField(blank=True)
+
     price = models.IntegerField(default=1)
     scissors = models.IntegerField(default=10)
 

@@ -1,10 +1,15 @@
 from django.shortcuts import render
-#from blog.models import Post
+from shop.models import Product
 
 # Create your views here.
 def homepage(request):
-    #recent_post = Post.objects.order_by('-pk')[:3]
-    return render(request, 'single_pages/homepage.html')
-    #{'recent_posts' : recent_post,} 이게 html' 뒤에 콤마 찍고 있음
+    recent_product = Product.objects.order_by('-pk')[:3]
+    return render(request, 'single_pages/homepage.html', {
+        'recent_products': recent_product,
+    })
+
 def company(request):
     return render(request, 'single_pages/company.html')
+
+def mypage(request):
+    return render(request, 'single_pages/my_page.html')

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
+{% load socialaccount %}
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beyond the Auction</title>
+  <title>MY Page</title>
   <link href="{% static 'shop/bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen"></link>
-  <link href="{% static 'single_pages/css/homepage.css' %}" rel="stylesheet" type="text/css" media="screen"></link>
+  <link href="{% static 'single_pages/css/my_page.css' %}" rel="stylesheet" type="text/css" media="screen"></link>
   <script src="https://kit.fontawesome.com/54c8fd0744.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,25 +17,28 @@
   <section>
     <div class="container">
         <div class="row justify-content-between">
-            <div class="col-lg-6 text-light" id="main-area">
-                <h1>Beyond the Auction</h1>
-                <h2>옥션을 넘어</h2>
-                <h5>게임에 접속하지 않고도 옥션을 확인합니다.</h5>
+            <div class="col-lg-5 text-light" id="main-area">
+                <h1>마이페이지</h1>
+                <h2>회원 정보</h2>
             </div>
-            <div class="col-lg-5 text-light">
-                <h2>Recent Deal</h2>
-                {% for product in recent_products %}
+            <div class="col-lg-6">
                 <div class="card mt-1">
                     <div class="card-body">
-                        <span><img src="{{product.head_image.url}}"></span>
-                        <div class="float-right">
-                            <h4><a href="{{product.get_absolute_url}}" class="text-decorations-none text-dark">
-                            {{ product.name }}</a></h4>
-                            <h6 class="text-dark">{{product.price}}메소</h6>
-                        </div>
+                        <h6>이름 : {{user.username}}</h6>
                     </div>
                 </div>
-                {% endfor %}
+                {% if user.email %}
+                <div class="card mt-1">
+                    <div class="card-body">
+                        <h6>이메일 : {{user.email}}</h6>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-12" id="comment-area">
+
             </div>
         </div>
     </div>

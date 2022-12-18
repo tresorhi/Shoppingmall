@@ -20,7 +20,7 @@ def delete_comment(request, pk):
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
     model = Product
-    fields = ['name', 'hook_text', 'head_image', 'price', 'scissors', 'category', 'manufacturer']
+    fields = ['name', 'hook_text', 'head_image', 'content', 'price', 'scissors', 'category', 'manufacturer']
     template_name = 'shop/product_update_form.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -94,7 +94,7 @@ class ProductCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 class ProductList(ListView):
     model = Product
-    ordering = '-pk'
+    #ordering = '-pk'
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -105,11 +105,11 @@ class ProductList(ListView):
 
 
 class ProductSearch(ProductList):  # ListView 상속, 모델명_list 형태로 데이터 전달, 템플릿도 모델명_list.html
-    paginate_by = None
+    paginate_by = 5
 
     def get_queryset(self):
         q = self.kwargs['q']
-        product_list = Product.objects.filter(Q(title__contains=q) | Q(tags__name__contains=q)).distinct()
+        product_list = Product.objects.filter(Q(name__contains=q)).distinct()
         return product_list
 
     def get_context_data(self, *, object_list=None, **kwargs):
