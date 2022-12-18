@@ -43,6 +43,7 @@
       </div>
     </div>
   </nav>
+
   <!-- Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -53,8 +54,10 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
         <div class="modal-body">
           <div class="row">
+
             <div class="col-6">
               <a role="button" class="btn btn-outline-dark btn-block btn-sm"
                  href="{% provider_login_url 'google' %}">
@@ -63,13 +66,16 @@
                   href="/accounts/login/">
                 <i class="fa-regular fa-envelope"></i> LogIn with Email</a>
             </div>
+
             <div class="col-6">
               <a role="button" class="btn btn-outline-dark btn-block btn-sm"
                   href="/accounts/signup/">
                 <i class="fa-regular fa-envelope"></i> SignUp with Email</a>
             </div>
+
           </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>

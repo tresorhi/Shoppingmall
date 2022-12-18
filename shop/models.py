@@ -49,7 +49,6 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     hook_text = models.CharField(max_length=100, blank=True)
 
-
     head_image = models.ImageField(upload_to='shop/images/%Y/%m/%d/', blank=True)
     # %Y 2022, %y 22
 

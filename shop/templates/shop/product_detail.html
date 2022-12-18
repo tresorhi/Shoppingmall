@@ -1,0 +1,149 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    {{post.title}} - Blog
+{% endblock %}
+{% block main_area %}
+
+    <!-- Post content-->
+    <div id="post-area" >
+        <!-- Post header-->
+        <header class="mb-4">
+            <!-- Post title-->
+            <h1 class="fw-bolder mb-1">{{post.title | lower}}</h1>
+            {% if post.hook_text %}
+            <h5 class="text-muted">{{post.hook_text}}</h5>
+            {% endif %}
+            <!-- Post meta content-->
+            <div class="text-muted fst-italic mb-2">
+                Posted on {{post.created_at | date:"Y-m-d h:m:s"}} by {{post.author|upper}}
+            </div>
+            <!-- Post categories-->
+            {% if post.category %}
+                <a class="badge bg-secondary text-decoration-none link-light" href="{{post.category.get_absolute_url}}">{{post.category}}</a>
+            {% else %}
+                <a class="badge bg-secondary text-decoration-none link-light" href="/blog/category/no_category">미분류</a>
+            {% endif %}
+        </header>
+
+        {% if user.is_authenticated and user == post.author %}
+            <a class="btn btn-info float-right" href="/blog/update_post/{{post.pk}}/" role="button">
+                <i class="fas fa-pen">Edit Post</i>
+            </a>
+        {% endif %}
+
+        <!-- Preview image figure-->
+        <figure class="mb-4">
+            {% if post.head_image %}
+                <img class="img-fluid rounded" src="{{post.head_image.url}}" alt="{{post.title}}의 head_image" />
+            {% else %}
+                <img class="img-fluid rounded" src="https://picsum.photos/seed/{{post.pk}}/800/200" alt="random image" />
+            {% endif %}
+        </figure>
+
+        <!-- Post content-->
+        <section class="mb-5">
+            <p class="fs-5 mb-4">{{post.content}}</p>
+            {% if post.tags.exists %}
+                <i class="fas fa-tag"></i>
+                {% for t in post.tags.iterator %}
+                <span class="badge badge-pill badge-light">
+                    <a href="{{t.get_absolute_url}}">
+                        {{t}}
+                    </a>
+                </span>
+                {% endfor %}
+            {% endif %}
+            <br></br>
+            {% if post.file_upload %}
+            <a href="{{post.file_upload.url}}" class="btn btn-outline-dark" role="button" download>
+                {% if post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+                    <i class="fa-regular fa-file-excel"></i>
+                {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+                    <i class="fa-regular fa-file-word"></i>
+                {% else %}
+                    <i class="fa-regular fa-file"></i>
+                {% endif %}
+                Download {{post.get_file_name}}
+            </a>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- Comments section-->
+    <div id="comment-area" class="mb-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <!-- Comment form-->
+                    {% if user.is_authenticated %}
+                        <form class="mb-4" id="comment-form" method="post" action="{{post.get_absolute_url}}new_comment/">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{comment_form | crispy}}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    {% else %}
+                    <a role="button" class="btn btn-dark btn-block btn-sm" href="#"
+                        data-toggle="modal" data-target="#loginModal">
+                        Login and Leave a comment
+                    </a>
+                    {% endif %}
+
+                {% if post.comment_set.exists %}
+                    {% for comment in post.comment_set.iterator %}
+                        <!-- Single comment-->
+                        <div class="media d-flex" id="comment-{{comment.pk}}">
+                            <img class="d-flex mr-3 rounded-circle" src="{{ comment.get_avatar_url }}" alt="{{comment.author}}" width="60px">
+                            <div class="media-body ms-3">
+                                {% if user.is_authenticated and comment.author == user %}
+                                <div class="float-right">
+                                    <a role="button" class="btn btn-sm btn-info float-right"
+                                        href="/blog/update_comment/{{comment.pk}}">
+                                        Edit</a>
+                                    <a role="button" class="btn btn-sm btn-danger"
+                                        href="/blog/delete_comment/{{comment.pk}}">
+                                        Delete
+                                    </a>
+                                </div>
+                                <!-- Modal -->
+  <div class="modal fade" id="deleteModal-{{comment.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are you Sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <del>{{comment |linebreaks}}</del>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a role="button" class="btn btn-secondary" data-dismiss="modal"
+             href="/blog/delete_comment/{{comment.pk}}">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+                                {% endif %}
+                                 <div class="fw-bold">
+                                    {{comment.author.username}}
+                                    <small class="text_muted">{{comment.created_at}}</small>
+                                </div>
+                                <p>{{comment.content | linebreaks}}</p>
+                                {% if comment.created_at != comment.modified_at %}
+                                    <p class="text-muted float-right">
+                                        <small>Modified : {{comment.modified_at}}</small>
+                                    </p>
+                                {% endif%}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
