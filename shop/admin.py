@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Tag, Manufacturer
+from .models import Category, Tag, Manufacturer, Product, Comment
 
 # Register your models here.
 
@@ -17,3 +17,6 @@ class ManufacturerAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug' : ('name',)}
 
 admin.site.register(Manufacturer, ManufacturerAdmin)
+
+admin.site.register(Product)
+admin.site.register(Comment)
