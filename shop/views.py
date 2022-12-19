@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category, Tag, Comment
+from .models import Product, Category, Tag, Comment, Manufacturer
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
@@ -59,7 +59,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 
 class ProductCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
-    fields = ['name', 'hook_text', 'head_image', 'price', 'scissors', 'category', 'manufacturer']
+    fields = ['name', 'hook_text', 'head_image', 'content', 'price', 'scissors', 'category', 'manufacturer']
     #모델면_form.html
 
     def test_func(self):
@@ -156,18 +156,32 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
 
 
 def category_page(request, slug):
-        if slug == 'no_category':
-            category = "미분류"
-            product_list = Product.objects.filter(category=None)
-        else:
-            category = Category.objects.get(slug=slug)
-            product_list = Product.objects.filter(category=category)
-        return render(request, 'shop/product_list.html', {
-            'category' : category,
-            'product_list' : product_list,
-            'categories' : Category.objects.all(),
-            'no_category_product_count' : Product.objects.filter(category=None).count
-        })
+    if slug == 'no_category':
+        category = "미분류"
+        product_list = Product.objects.filter(category=None)
+    else:
+        category = Category.objects.get(slug=slug)
+        product_list = Product.objects.filter(category=category)
+    return render(request, 'shop/product_list.html', {
+        'category' : category,
+        'product_list' : product_list,
+        'categories' : Category.objects.all(),
+        'no_category_product_count' : Product.objects.filter(category=None).count
+    })
+
+def manufacturer_page(request, slug):
+    if slug == 'no_manufacturer':
+        manufacturer = "미분류"
+        product_list = Product.objects.filter(manufacturer=None)
+    else:
+        manufacturer = Manufacturer.objects.get(slug=slug)
+        product_list = Product.objects.filter(manufacturer=manufacturer)
+    return render(request, 'shop/product_list.html', {
+        'manufacturer' : manufacturer,
+        'product_list': product_list,
+        'manufacturers': Manufacturer.objects.all(),
+        'no_manufacturer_product_count': Product.objects.filter(manufacturer=None).count
+    })
 
 def tag_page(request, slug):
     tag = Tag.objects.get(slug=slug)

@@ -14,7 +14,10 @@
             <span class="badge badge-secondary">{{search_info}}</span>
         {% endif %}
         {% if category %}
-        - <span class="badge badge-secondary">-{{category}}</span>
+        - <span class="badge badge-secondary">{{category}}</span>
+        {% endif %}
+        {% if manufacturer %}
+        - <span class="badge badge-secondary">{{manufacturer}}</span>
         {% endif %}
         {% if tag %}
         <i class="fas fa-tag"></i>
@@ -34,20 +37,28 @@
         {% endif %}
         <div class="card-body">
             {% if p.category %}
-            <span class="badge badge-secondary float-right">
+            <span class="badge badge-warning float-right">
                 <a href="{{p.category.get_absolute_url}}">{{p.category}}</a>
             </span>
             {% else %}
-            <span class="badge badge-secondary float-right">
+            <span class="badge badge-warning text-decorations-none float-right">
                 <a href="/shop/category/no_category/">
                     미분류
                 </a></span>
             {% endif %}
 
-            <h2 class="card-title">{{p.name | upper}}</h2>
-            {% if p.hook_text %}
-                <h5 class="text-muted"> {{p.hook_text}} </h5>
+            {% if p.manufacturer %}
+            <span class="badge badge-info float-right">
+                <a href="{{p.manufacturer.get_absolute_url}}">{{p.manufacturer}}</a>
+            </span>
             {% endif %}
+
+            <h2 class="card-title">{{p.name | upper}}</h2>
+
+            {% if p.hook_text %}
+                <h6 class="text-muted"> {{p.hook_text}} </h6>
+            {% endif %}
+            <h5>가격: {{p.price | upper}}메소</h5>
 
             <!--태그 출력-->
             {% if p.tags.exists %}

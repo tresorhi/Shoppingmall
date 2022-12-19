@@ -16,22 +16,22 @@
   <section>
     <div class="container">
         <div class="row justify-content-between">
-            <div class="col-lg-6 text-light" id="main-area">
+            <div class="col-lg-5 text-light" id="main-area">
                 <h1>Beyond the Auction</h1>
                 <h2>옥션을 넘어</h2>
                 <h5>게임에 접속하지 않고도 옥션을 확인합니다.</h5>
             </div>
-            <div class="col-lg-5 text-light">
+            <div class="col-lg-6 text-light">
                 <h2>Recent Deal</h2>
                 {% for product in recent_products %}
                 <div class="card mt-1">
                     <div class="card-body">
-                        <span><img src="{{product.head_image.url}}"></span>
                         <div class="float-right">
                             <h4><a href="{{product.get_absolute_url}}" class="text-decorations-none text-dark">
                             {{ product.name }}</a></h4>
                             <h6 class="text-dark">{{product.price}}메소</h6>
                         </div>
+                        <span ><img style="width:200px" src="{{product.head_image.url}}"></span>
                     </div>
                 </div>
                 {% endfor %}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('update_product/<int:pk>/', views.ProductUpdate.as_view()),
     path('create_product/', views.ProductCreate.as_view()),
     path('category/<str:slug>/', views.category_page),
+    path('manufacturer/<str:slug>/', views.manufacturer_page),
     path('tag/<str:slug>/', views.tag_page),
     path('search/<str:q>/', views.ProductSearch.as_view())
 ]

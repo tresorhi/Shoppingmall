@@ -35,7 +35,6 @@
           {% for c in categories %}
           <li><a href="{{c.get_absolute_url}}">{{c}} ({{c.product_set.count}})</a></li>
           {% endfor %}
-          <li><a href="/shop/category/no_category">미분류 ({{no_category_product_count}})</a></li>
         </ul>
     </div>
   </div>
